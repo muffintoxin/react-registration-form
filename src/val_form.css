@@ -1,0 +1,49 @@
+.container {
+}
+.register-form {
+  width: 400px;
+  height: 600px;
+  border: 1px solid rgb(202, 202, 202);
+}
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  height: 30px;
+  background-color: #337ab7;
+  color: #ffffff;
+}
+.sb-btn{
+  background-color: #337ab7;
+  color: #ffffff;
+}
+input {
+  border: 1px solid rgb(202, 202, 202);
+  border-radius: 4px;
+}
+input:focus {
+  outline: none;
+}
+.note {
+  display: block;
+  color: rgb(202, 202, 202);
+  font-size: 0.7em;
+}
+.sb-text {
+  font-size: 0.7em;
+  margin-top: 20px;
+}
+.sb-text a {
+  text-decoration: none;
+  color: #337ab7;
+}
+label {
+  display: block;
+}
+.required-field {
+  display: none;
+  color: red;
+  font-size: 0.7em;
+
+}
