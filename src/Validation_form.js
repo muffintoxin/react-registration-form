@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
+ import React, { Component } from 'react';
 import './val_form.css';
-
 
 class Validation_form extends Component {
   constructor(){
@@ -24,7 +23,8 @@ class Validation_form extends Component {
         email: false
       },
       showInfo: false
-    }; 
+    };
+
     this.nameRegExp = /^[a-zA-Z]+$/;
     this.usernameRegExp =/^[a-z\d\.\_]+$/;
     this.pwRegExp = /^.{9,}$/;
@@ -36,9 +36,9 @@ class Validation_form extends Component {
     this.requiredStyle = this.requiredStyle.bind(this);
     this.errorMessages = this.errorMessages.bind(this);
     this.validate = this.validate.bind(this);
-    this.validateData = this.validateData.bind(this);
   }
-  validateData(values) {
+
+  /* validateData(values) {
     const errors = {}
     if (!this.state.touched.firstName) {
       errors.firstName = 'Required'
@@ -47,13 +47,10 @@ class Validation_form extends Component {
     }
     return errors
   }
+ */
 
-
-
-
-
-  handleChange(e, name) {
-    this.setState({[name]: e.target.value});
+  handleChange = e => {
+    this.setState({[e.target.name]: e.target.value});
   }
   checkData(regExp, stateName, stateValid, name){
     this.setState({
@@ -63,19 +60,20 @@ class Validation_form extends Component {
       this.setState({[stateValid]: true});
     } else {
       this.setState({[stateValid]: false});
+      this.setState({showInfo: true});
     }
   }
   validate(firstName, lastName, username, pw, email) {  
     return {
       firstName: firstName.length === 0,
       lastName: lastName.length === 0,
-      username: firstName.length === 0,
-      pw: lastName.length === 0,
-      email: firstName.length === 0
+      username: username.length === 0,
+      pw: pw.length === 0,
+      email: email.length === 0
     };
   }
   requiredStyle(name, stateValid) {
-    const show = (this.state.showInfo && this.state[name] == "") || !this.state[stateValid];
+    const show = (this.state.showInfo && this.state[name] === "") || !this.state[stateValid];
     return {display: show ? 'block' : 'none'}
   }
   errorMessages(name, stateValid) {
@@ -83,102 +81,112 @@ class Validation_form extends Component {
     const invalidStr = 'Enter valid '+ name +'.';
     return !this.state[stateValid] ? invalidStr : true
   }
-  handleBlur = (field) => (evt) => {
-    this.setState({
-      touched: { ...this.state.touched, [field]: true },
-    });
-  }
   handleSubmit() {      
-    const { firstName, lastName, username, pw, email,  } = this.state;
+    const {firstName, lastName, username, pw, email } = this.state;
     const isEnabled =
     firstName.length > 0 &&
     lastName.length > 0 &&
     username.length > 0 &&
     pw.length > 0 &&
     email.length > 0;
-    
-    /* if (this.state.firstName == null || this.state.firstName == "", 
-        this.state.lastName == null || this.state.lastName == "", 
-        this.state.username == null || this.state.username == "", 
-        this.state.email == null || this.state.email == "", 
-        this.state.pw == null || this.state.pw == "")
-    { 
-        
-    }*/
+   
     alert(`Signed up with firstName: ${firstName} email: ${email}`);
   }
-  render() {
 
+  render() {
     const errors = this.validate(this.state.firstName, this.state.lastName, this.state.username, this.state.pw, this.state.email);
-    const isDisabled = Object.keys(errors).some(x => errors[x]);
+
     const shouldMarkError = (field) => {
       const hasError = errors[field];
       const shouldShow = this.state.touched[field];      
       return hasError ? shouldShow : false;
     };
+    const isRequred = (name) =>{
+      return {display: shouldMarkError(name) ? 'block' : 'none'}
+    }
+    
+    const checkOnSubmit = () => {
+      if (this.state.firstName === null || this.state.firstName === "", 
+      this.state.lastName === null || this.state.lastName === "", 
+      this.state.username === null || this.state.username === "", 
+      this.state.email === null || this.state.email === "", 
+      this.state.pw === null || this.state.pw === "") {}
+    }; 
     
     return (
       <div className="container">
         <div className="register-form" >
           <div className="title">Create Your Free Account</div>
-          <form onSubmit={this.handleSubmit}>
+          <form onSubmit={checkOnSubmit}>
+
             <div>
               <label>First Name</label>
-              <input type="text" value={this.state.firstName} name="firstName"
+              <input type="text" value={this.state.firstName} name="firstName" id="firstName"
                 className={shouldMarkError("firstName") ? "error" : ""}
-                onChange={(e) => this.handleChange(e, 'firstName')}
+                onChange={(e) => this.handleChange(e)}
                 onBlur={() => this.checkData(this.nameRegExp, this.state.firstName, this.state.firstNameIslValid, "firstName")}
               />
               <span className="required-field" style={this.requiredStyle()}>{this.errorMessages('firstName', 'firstNameIslValid')}</span>
+              <span className="required-field" style={isRequred('firstName')}>Required</span>
             </div>
+
             <div>
               <label>Last Name</label>
-              <input type="text" value={this.state.lastName} name="lastName"
+              <input type="text" value={this.state.lastName} name="lastName" id="lastName"
               className={shouldMarkError("lastName") ? "error" : ""}
-                onChange={(e) => this.handleChange(e, 'lastName')}
+                onChange={(e) => this.handleChange(e)}
                 onBlur={() => this.checkData(this.nameRegExp, this.state.lastName, this.state.lastNameIslValid, "lastName")}
                 // onBlur={this.handleBlur('lastName')}
               />
               <span className="required-field" style={this.requiredStyle()}>{this.errorMessages('lastName', 'lastNameIslValid')}</span>
+              <span className="required-field" style={isRequred('lastName')}>Required</span>
             </div>
+
             <div>
               <label>Username</label>
               <input type="text" value={this.state.username} name="username" 
                 className={shouldMarkError("username") ? "error" : ""}
-                onChange={(e) => this.handleChange(e, 'username')}
+                onChange={(e) => this.handleChange(e)}
                 onBlur={() => this.checkData(this.usernameRegExp, this.state.username, this.state.usernameIslValid, "username")}
               />
               <span className="required-field" style={this.requiredStyle()}>{this.errorMessages('username', 'usernameIslValid')}</span>
+              <span className="required-field" style={isRequred('username')}>Required</span>
             </div>
+
             <div>
               <label>Password</label>
               <input type="password" value={this.state.pw} name="pw"
                 className={shouldMarkError("pw") ? "error" : ""}
-                onChange={(e) => this.handleChange(e, 'pw')}
+                onChange={(e) => this.handleChange(e)}
                 onBlur={() => this.checkData(this.pwRegExp, this.state.pw, this.state.passwordIsValid, "pw")}
               />
               <span className="note">At least 8 characters</span>
               <span className="required-field" style={this.requiredStyle()}>{this.errorMessages('pw', 'passwordIslValid')}</span>
+              <span className="required-field" style={isRequred('pw')}>Required</span>
             </div>
+
             <div>
             <label>Email</label>
               <input type="text" name="email" value={this.state.email}
                 className={shouldMarkError("email") ? "error" : ""}
-                onChange={(e) => this.handleChange(e, 'email')}
-                onBlur={() => this.checkData(this.emailRegExp, this.state.email, this.state.emaiIslValid, "email")} 
+                onChange={(e) => this.handleChange(e)}
+                onBlur={() => this.checkData(this.emailRegExp, this.state.email, this.state.emaiIslValid, "email")}
               />
-              <span className="required-field" style={this.requiredStyle()}>{this.errorMessages('email', 'emailIslValid')}</span>
               <span className="note">An activatoin link will be sent to this email</span>
+              <span className="required-field" style={this.requiredStyle()}>{this.errorMessages('email', 'emailIslValid')}</span>
+              <span className="required-field" style={isRequred('email')}>Required</span>
             </div>
+
             <div className="sb-text">By clicking Submit, I agree  that I have read and accepted the&nbsp;
-              <a href='#'>Terms and Conditions.</a>
+              <a href='TermsandConditions'>Terms and Conditions.</a>
             </div>            
             <button className="sb-btn">SUBMIT</button>
+            
           </form>
         </div>
       </div>
     );
-  }
+  } 
   
 }
 

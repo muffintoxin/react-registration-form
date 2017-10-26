@@ -1,35 +1,45 @@
 .container {
 }
 .register-form {
-  width: 400px;
-  height: 600px;
+  width: 450px;
+  height: 590px;
   border: 1px solid rgb(202, 202, 202);
-  margin: 0 auto;
+  margin: 50px auto;
+}
+form {
+  height: 100%
+}
+form div {
+  margin: 23px 22px;
 }
 .title {
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
-  width: 400px;
-  height: 30px;
+  height: 33px;
   background-color: #337ab7;
   color: #ffffff;
+  padding-left: 22px;
 }
 .sb-btn{
   background-color: #337ab7;
   color: #ffffff;
-  width: 75px;
-  height: 28px;
-  margin-top: 10px;
+  width: 90px;
+  height: 30px;
+  outline: none;
+  margin-left: 22px;
+  font-size: 00.8em;
+  font-weight: bold;
+  cursor: pointer;
 }
 input {
   border: 1px solid rgb(202, 202, 202);
   border-radius: 4px;
+  height: 25px;
+  width: 100%;
+  font-size: .9em
 }
 form input.error {
-  border-color: red;
-}
-form input.error:after {
   border-color: red;
 }
 input:focus {
@@ -37,7 +47,7 @@ input:focus {
 }
 .note {
   display: block;
-  color: rgb(202, 202, 202);
+  color: rgba(111, 95, 95, 0.67);
   font-size: 0.7em;
 }
 .sb-text {
@@ -55,5 +65,10 @@ label {
   display: none;
   color: red;
   font-size: 0.7em;
-
+}
+.hidden {
+  display: none;
+}
+form span.required {
+  display: block;
 }
