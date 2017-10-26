@@ -4,6 +4,7 @@
   width: 400px;
   height: 600px;
   border: 1px solid rgb(202, 202, 202);
+  margin: 0 auto;
 }
 .title {
   display: flex;
@@ -17,10 +18,19 @@
 .sb-btn{
   background-color: #337ab7;
   color: #ffffff;
+  width: 75px;
+  height: 28px;
+  margin-top: 10px;
 }
 input {
   border: 1px solid rgb(202, 202, 202);
   border-radius: 4px;
+}
+form input.error {
+  border-color: red;
+}
+form input.error:after {
+  border-color: red;
 }
 input:focus {
   outline: none;
