@@ -74,7 +74,7 @@ class Validation_form extends Component {
   errorMessages(name) {
     const requiredStr = 'This field is required.';
     const invalidStr = 'Enter valid '+ name +'.';
-    return !this.state.valid[name] ? invalidStr : requiredStr
+    return !this.state.valid[name] && this.state[name] !== "" ? invalidStr : requiredStr
   }
   handleSubmit() {
     const {firstName, lastName, username, password, email } = this.state;
