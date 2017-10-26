@@ -27,6 +27,13 @@ class Validation_form extends Component {
       modalisOpen: false
     };
 
+    this.rexExpMap = {
+      firstName: /^[a-zA-Z]+$/,
+      lastName: /^[a-zA-Z]+$/,
+      username: /^[a-z\d\.\_]+$/,
+      password: /^.{9,}$/,
+      email: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
+    }
     this.nameRegExp = /^[a-zA-Z]+$/;
     this.usernameRegExp =/^[a-z\d\.\_]+$/;
     this.pwRegExp = /^.{9,}$/;
@@ -40,8 +47,10 @@ class Validation_form extends Component {
     this.validate = this.validate.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
   }
-  handleChange = e => {
-    this.setState({[e.target.name]: e.target.value});
+  handleChange = (e, name) => {
+    this.setState({[e.target.name]: e.target.value}, () => {
+      this.checkData(this.rexExpMap[name], this.state[name], this.state.valid[name], name)
+    });
   }
   checkData(regExp, stateName, stateValid, name){
     this.setState({
@@ -68,7 +77,6 @@ class Validation_form extends Component {
   }
   requiredStyle(name) {
     const show = (this.state[name] === "" || !this.state.valid[name]) && this.state.touched[name];
-    console.log(this.state[name], this.state.valid[name], this.state.touched[name]);
     return {display: show ? 'block' : 'none'}
   }
   errorMessages(name) {
@@ -122,8 +130,7 @@ class Validation_form extends Component {
               <label>First Name</label>
               <input type="text" value={this.state.firstName} name="firstName" id="firstName"
                 className={shouldMarkError("firstName") ? "error" : ""}
-                onChange={(e) => this.handleChange(e)}
-                onBlur={() => this.checkData(this.nameRegExp, this.state.firstName, this.state.valid.firstName, "firstName")}
+                onChange={(e) => this.handleChange(e, "firstName")}
               />
               <span className="required-field" style={this.requiredStyle('firstName')}>{this.errorMessages('firstName')}</span>
             </div>
@@ -132,8 +139,7 @@ class Validation_form extends Component {
               <label>Last Name</label>
               <input type="text" value={this.state.lastName} name="lastName" id="lastName"
               className={shouldMarkError("lastName") ? "error" : ""}
-                onChange={(e) => this.handleChange(e)}
-                onBlur={() => this.checkData(this.nameRegExp, this.state.lastName, this.state.valid.lastName, "lastName")}
+                onChange={(e) => this.handleChange(e, "lastName")}
               />
               <span className="required-field" style={this.requiredStyle('lastName')}>{this.errorMessages('lastName')}</span>
             </div>
@@ -142,8 +148,7 @@ class Validation_form extends Component {
               <label>Username</label>
               <input type="text" value={this.state.username} name="username" 
                 className={shouldMarkError("username") ? "error" : ""}
-                onChange={(e) => this.handleChange(e)}
-                onBlur={() => this.checkData(this.usernameRegExp, this.state.username, this.state.valid.username, "username")}
+                onChange={(e) => this.handleChange(e, "username")}
               />
               <span className="required-field" style={this.requiredStyle('username')}>{this.errorMessages('username')}</span>
             </div>
@@ -152,8 +157,7 @@ class Validation_form extends Component {
               <label>Password</label>
               <input type="password" value={this.state.password} name="password"
                 className={shouldMarkError("password") ? "error" : ""}
-                onChange={(e) => this.handleChange(e)}
-                onBlur={() => this.checkData(this.pwRegExp, this.state.pw, this.state.valid.password, "password")}
+                onChange={(e) => this.handleChange(e, "password")}
               />
               <span className="note" style={helpMessage('password')}>At least 8 characters</span>
               <span className="required-field" style={this.requiredStyle('password')}>{this.errorMessages('password')}</span>
@@ -163,8 +167,7 @@ class Validation_form extends Component {
             <label>Email</label>
               <input type="text" name="email" value={this.state.email}
                 className={shouldMarkError("email") ? "error" : ""}
-                onChange={(e) => this.handleChange(e)}
-                onBlur={() => this.checkData(this.emailRegExp, this.state.email, this.state.valid.email, "email")}
+                onChange={(e) => this.handleChange(e, "email")}
               />
               <span className="note" style={helpMessage('email')}>An activatoin link will be sent to this email</span>
               <span className="required-field" style={this.requiredStyle('email')}>{this.errorMessages('email')}</span>
