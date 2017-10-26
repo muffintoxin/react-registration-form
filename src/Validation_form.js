@@ -1,4 +1,4 @@
- import React, { Component } from 'react';
+import React, { Component } from 'react';
 import './val_form.css';
 
 class Validation_form extends Component {
@@ -98,7 +98,6 @@ class Validation_form extends Component {
         email: true,
       },
     });
-    //alert(`Signed up with firstName: ${firstName} email: ${email}`);
   }
   toggleModal(){
     this.setState({
@@ -195,25 +194,25 @@ class Modal extends React.Component {
         <div className='modal-content'>
           <div className="modal-title">{this.props.text}</div>
           <div>
-            <div>
-              <div className="modal-label">First Name: </div>
-              <div>{this.props.firstName}</div>
-              </div>
-            <div>
+            <div className="modal-label">
+              <div>First Name: </div>
+              <div className="modal-input-value">{this.props.firstName}</div>
+            </div>
+            <div className="modal-label">
               <div>Last Name: </div>
-              <div>{this.props.lastName}</div>
+              <div className="modal-input-value">{this.props.lastName}</div>
             </div>
-            <div>
+            <div className="modal-label">
               <div>Username: </div>
-              <div>{this.props.username}</div>
+              <div className="modal-input-value">{this.props.username}</div>
             </div>
-            <div>
+            <div className="modal-label">
               <div>Passwort: </div>
-              <div>{this.props.password}</div>
+              <div className="modal-input-value">{this.props.password}</div>
             </div>
-            <div>
+            <div className="modal-label">
               <div>Email: </div>
-              <div>{this.props.email}</div>
+              <div className="modal-input-value">{this.props.email}</div>
             </div>
           </div>
           <button className="modal-btn" onClick={this.props.closeModal}>Close</button>

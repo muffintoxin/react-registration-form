@@ -84,7 +84,7 @@ label {
 .modal-content {
   position: absolute;
   width: 414px;
-  height: 50%;
+  height: 490px;
   margin: 0 auto;
   left: 25%;
   right: 25%;
@@ -92,21 +92,17 @@ label {
   bottom: 25%;
   background: white;
 }
-.modal span {
-  margin-bottom: 10px;
-  padding-bottom: 10px;
-}
 .modal button {
   background-color: #337ab7;
   color: #ffffff;
   width: 90px;
   height: 30px;
   outline: none;
-  margin-left: 22px;
+  margin-left: 10%;
   font-size: .8em;
   font-weight: bold;
   cursor: pointer;
-  margin-top: 40px;
+  margin-top: 30px;
 }
 .modal-title {
   display: flex;
@@ -119,5 +115,17 @@ label {
   margin-bottom: 40px;
 }
 .modal-label {
-
+  margin-bottom: 20px;
+  margin-left: 10%;
+}
+.modal-label div {
+  display: inline-block;
+  padding-bottom: 3px;
+  margin-right: 10px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 80%;
+}
+.modal-input-value {
+  border-bottom: 1px solid rgb(202, 202, 202);
 }
