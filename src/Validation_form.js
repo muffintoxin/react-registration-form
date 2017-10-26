@@ -31,21 +31,17 @@ class Validation_form extends Component {
       firstName: /^[a-zA-Z]+$/,
       lastName: /^[a-zA-Z]+$/,
       username: /^[a-z\d\.\_]+$/,
-      password: /^.{9,}$/,
+      password: /^.{8,}$/,
       email: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
     }
-    this.nameRegExp = /^[a-zA-Z]+$/;
-    this.usernameRegExp =/^[a-z\d\.\_]+$/;
-    this.pwRegExp = /^.{9,}$/;
-    this.emailRegExp = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
   
     this.handleChange = this.handleChange.bind(this);
     this.checkData = this.checkData.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.requiredStyle = this.requiredStyle.bind(this);
     this.errorMessages = this.errorMessages.bind(this);
     this.validate = this.validate.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
+    this.checkOnSubmit = this.checkOnSubmit.bind(this);
   }
   handleChange = (e, name) => {
     this.setState({[e.target.name]: e.target.value}, () => {
@@ -84,18 +80,26 @@ class Validation_form extends Component {
     const invalidStr = 'Enter valid '+ name +'.';
     return !this.state.valid[name] && this.state[name] !== "" ? invalidStr : requiredStr
   }
-  handleSubmit() {
-    const {firstName, lastName, username, password, email } = this.state;
-    const isEnabled =
-    firstName.length > 0 &&
-    lastName.length > 0 &&
-    username.length > 0 &&
-    password.length > 0 &&
-    email.length > 0;
-   
-    alert(`Signed up with firstName: ${firstName} email: ${email}`);
-  }
+  checkOnSubmit() {
+    const {firstName, lastName, username, password, email } = this.state;    
+    const formFilled = !(firstName === '' || lastName === '' || username === '' || password === '' || email === '');
+    const formInvalid = Object.keys(this.state.valid).some(x => !this.state.valid[x]);
+    const formHasErrors = !formFilled || formInvalid;
 
+    if (!formHasErrors) {
+      this.toggleModal();
+    }
+    this.setState({
+      touched: {
+        firstName: true,
+        lastName: true,
+        username: true,
+        password: true,
+        email: true,
+      },
+    });
+    //alert(`Signed up with firstName: ${firstName} email: ${email}`);
+  }
   toggleModal(){
     this.setState({
       modalisOpen: !this.state.modalisOpen
@@ -108,24 +112,15 @@ class Validation_form extends Component {
       const shouldShow = this.state.touched[field];      
       return hasError ? shouldShow : false;
     }
-    const isRequired = (name) =>{
-      return {display: shouldMarkError(name) ? 'block' : 'none'}
-    }
     const helpMessage = (name) =>{
       return {display: shouldMarkError(name) ? 'none' : 'block'}
     }
-    
-    const checkOnSubmit = () => {
-      const {firstName, lastName, username, password, email } = this.state; 
-      this.toggleModal();
-    }; 
     
     return (
       <div className="container">
         <div className="register-form" >
           <div className="title">Create Your Free Account</div>
-          <form onSubmit={checkOnSubmit}>
-
+          <div className="form">
             <div>
               <label>First Name</label>
               <input type="text" value={this.state.firstName} name="firstName" id="firstName"
@@ -176,14 +171,13 @@ class Validation_form extends Component {
             <div className="sb-text">By clicking Submit, I agree  that I have read and accepted the&nbsp;
               <a href='TermsandConditions'>Terms and Conditions.</a>
             </div>            
-            <button className="sb-btn">SUBMIT</button>            
-          </form>
+            <button className="sb-btn" type="button" onClick={this.checkOnSubmit}>SUBMIT</button>            
+          </div>
         </div>
         {this.state.modalisOpen ? 
           <Modal
             text='Your Data'
-            fn='this.state.firstName'
-            ln={this.state.lastName}
+            {...this.state}
             closeModal={this.toggleModal}
           />
           : null
@@ -202,27 +196,27 @@ class Modal extends React.Component {
           <div className="modal-title">{this.props.text}</div>
           <div>
             <div>
-              <span>First Name</span>
-              <span>{this.props.fn}</span>
+              <div className="modal-label">First Name: </div>
+              <div>{this.props.firstName}</div>
+              </div>
+            <div>
+              <div>Last Name: </div>
+              <div>{this.props.lastName}</div>
             </div>
             <div>
-              <span>Last Name</span>
-              <span>{this.props.ln}</span>
+              <div>Username: </div>
+              <div>{this.props.username}</div>
             </div>
             <div>
-              <span>Username</span>
-              <span>{this.props.fn}</span>
+              <div>Passwort: </div>
+              <div>{this.props.password}</div>
             </div>
             <div>
-              <span>Passwort</span>
-              <span>{this.props.fn}</span>
-            </div>
-            <div>
-              <span>Email</span>
-              <span>{this.props.fn}</span>
+              <div>Email: </div>
+              <div>{this.props.email}</div>
             </div>
           </div>
-          <button onClick={this.props.closeModal}>Close</button>
+          <button className="modal-btn" onClick={this.props.closeModal}>Close</button>
         </div>
       </div>
     );

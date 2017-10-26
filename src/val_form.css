@@ -1,15 +1,13 @@
-.container {
-}
 .register-form {
   width: 450px;
   height: 590px;
   border: 1px solid rgb(202, 202, 202);
   margin: 50px auto;
 }
-form {
+.form {
   height: 100%
 }
-form div {
+.form div {
   margin: 23px 22px;
 }
 .title {
@@ -39,7 +37,7 @@ input {
   width: 100%;
   font-size: .9em
 }
-form input.error {
+.form input.error {
   border-color: red;
 }
 input:focus {
@@ -69,7 +67,7 @@ label {
 .hidden {
   display: none;
 }
-form span.required {
+.form span.required {
   display: block;
 }
 .modal {
@@ -81,18 +79,22 @@ form span.required {
   right: 0;
   bottom: 0;
   margin: 0 auto;
-  background-color: rgba(0,0,0, 0.5);
+  background-color: rgba(0,0,0, 0.1);
 }
 .modal-content {
   position: absolute;
-  width: 450px;
-  height: 592px;
+  width: 414px;
+  height: 50%;
   margin: 0 auto;
   left: 25%;
   right: 25%;
-  top: 5%;
+  top: 11%;
   bottom: 25%;
   background: white;
+}
+.modal span {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
 }
 .modal button {
   background-color: #337ab7;
@@ -101,9 +103,10 @@ form span.required {
   height: 30px;
   outline: none;
   margin-left: 22px;
-  font-size: 00.8em;
+  font-size: .8em;
   font-weight: bold;
   cursor: pointer;
+  margin-top: 40px;
 }
 .modal-title {
   display: flex;
@@ -113,4 +116,8 @@ form span.required {
   background-color: #337ab7;
   color: #ffffff;
   padding-left: 22px;
+  margin-bottom: 40px;
+}
+.modal-label {
+
 }
