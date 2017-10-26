@@ -48,9 +48,13 @@ class Validation_form extends Component {
       touched: { ...this.state.touched, [name]: true },
     });
    if(regExp.test(stateName)) {
-      this.setState({[stateValid]: true});
+      this.setState({
+        valid: { ...this.state.valid, [name]: true },
+      });
     } else {
-      this.setState({[stateValid]: false});
+      this.setState({
+        valid: { ...this.state.valid, [name]: false },
+      });
     }
   }
   validate(firstName, lastName, username, password, email) {  
