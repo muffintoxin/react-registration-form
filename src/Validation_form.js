@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import Modal from './modal';
 import './val_form.css';
 
-class Validation_form extends Component {
-  constructor(){
-    super(); 
+class ValidationForm extends Component {
+  constructor(props){
+    super(props); 
    this.state = {
       firstName: '',
       lastName: '',
@@ -28,21 +29,18 @@ class Validation_form extends Component {
     };
 
     this.rexExpMap = {
-      firstName: /^[a-zA-Z]+$/,
-      lastName: /^[a-zA-Z]+$/,
-      username: /^[a-z\d\.\_]+$/,
+      firstName: /^[a-zA-Z\u00c4\u00e4\u00d6\u00f6\u00dc\u00fc\u00df]+$/,
+      lastName: /^[a-zA-Z\u00c4\u00e4\u00d6\u00f6\u00dc\u00fc\u00df]+$/,
+      username: /^[a-z\d._]+$/,
       password: /^.{8,}$/,
       email: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
     }
   
     this.handleChange = this.handleChange.bind(this);
-    this.checkData = this.checkData.bind(this);
-    this.requiredStyle = this.requiredStyle.bind(this);
-    this.errorMessages = this.errorMessages.bind(this);
-    this.validate = this.validate.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
     this.checkOnSubmit = this.checkOnSubmit.bind(this);
   }
+
   handleChange = (e, name) => {
     this.setState({[e.target.name]: e.target.value}, () => {
       this.checkData(this.rexExpMap[name], this.state[name], this.state.valid[name], name)
@@ -100,15 +98,16 @@ class Validation_form extends Component {
     });
   }
   toggleModal(){
-    this.setState({
-      modalisOpen: !this.state.modalisOpen
-    });   
+    this.setState(prevState => ({
+      modalisOpen: !prevState.modalisOpen
+    }));
   }
+  
   render() {
     const errors = this.validate(this.state.firstName, this.state.lastName, this.state.username, this.state.password, this.state.email);
     const shouldMarkError = (field) => {
       const hasError = errors[field];
-      const shouldShow = this.state.touched[field];      
+      const shouldShow = this.state.touched[field];
       return hasError ? shouldShow : false;
     }
     const helpMessage = (name) =>{
@@ -173,7 +172,7 @@ class Validation_form extends Component {
             <button className="sb-btn" type="button" onClick={this.checkOnSubmit}>SUBMIT</button>            
           </div>
         </div>
-        {this.state.modalisOpen ? 
+        {this.state.modalisOpen? 
           <Modal
             text='Your Data'
             {...this.state}
@@ -187,39 +186,5 @@ class Validation_form extends Component {
   
 }
 
-class Modal extends React.Component {
-  render() {
-    return (
-      <div className='modal'>
-        <div className='modal-content'>
-          <div className="modal-title">{this.props.text}</div>
-          <div>
-            <div className="modal-label">
-              <div>First Name: </div>
-              <div className="modal-input-value">{this.props.firstName}</div>
-            </div>
-            <div className="modal-label">
-              <div>Last Name: </div>
-              <div className="modal-input-value">{this.props.lastName}</div>
-            </div>
-            <div className="modal-label">
-              <div>Username: </div>
-              <div className="modal-input-value">{this.props.username}</div>
-            </div>
-            <div className="modal-label">
-              <div>Passwort: </div>
-              <div className="modal-input-value">{this.props.password}</div>
-            </div>
-            <div className="modal-label">
-              <div>Email: </div>
-              <div className="modal-input-value">{this.props.email}</div>
-            </div>
-          </div>
-          <button className="modal-btn" onClick={this.props.closeModal}>Close</button>
-        </div>
-      </div>
-    );
-  }
-};
 
-export default Validation_form;
+export default ValidationForm;
