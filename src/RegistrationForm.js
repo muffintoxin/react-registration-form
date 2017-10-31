@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Modal from './modal';
-import './val_form.css';
+import './RegistrationForm.css';
 
-class ValidationForm extends Component {
+class RegistrationForm extends Component {
   constructor(props){
     super(props); 
    this.state = {
@@ -49,15 +49,15 @@ class ValidationForm extends Component {
   }
   checkData(regExp, stateName, stateValid, name){
     this.setState({
-      touched: { ...this.state.touched, [name]: true },
+      touched: { ...this.state.touched, [name]: true }
     });
    if(regExp.test(stateName)) {
       this.setState({
-        valid: { ...this.state.valid, [name]: true },
+        valid: { ...this.state.valid, [name]: true }
       });
     } else {
       this.setState({
-        valid: { ...this.state.valid, [name]: false },
+        valid: { ...this.state.valid, [name]: false }
       });
     }
   }
@@ -208,4 +208,4 @@ class ValidationForm extends Component {
 }
 
 
-export default ValidationForm;
+export default RegistrationForm;
