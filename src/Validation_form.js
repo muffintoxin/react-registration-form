@@ -37,6 +37,7 @@ class ValidationForm extends Component {
     }
   
     this.handleChange = this.handleChange.bind(this);
+    this.checkData = this.checkData.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
     this.checkOnSubmit = this.checkOnSubmit.bind(this);
   }
@@ -120,48 +121,68 @@ class ValidationForm extends Component {
           <div className="title">Create Your Free Account</div>
           <div className="form">
             <div>
-              <label>First Name</label>
-              <input type="text" value={this.state.firstName} name="firstName" id="firstName"
-                className={shouldMarkError("firstName") ? "error" : ""}
-                onChange={(e) => this.handleChange(e, "firstName")}
-              />
+              <label>
+                First Name
+                <input
+                  type="text"
+                  value={this.state.firstName}
+                  name="firstName" id="firstName"
+                  className={shouldMarkError("firstName") ? "error" : ""}
+                  onChange={(e) => this.handleChange(e, "firstName")} />
+              </label>
               <span className="required-field" style={this.requiredStyle('firstName')}>{this.errorMessages('firstName')}</span>
             </div>
 
             <div>
-              <label>Last Name</label>
-              <input type="text" value={this.state.lastName} name="lastName" id="lastName"
-              className={shouldMarkError("lastName") ? "error" : ""}
-                onChange={(e) => this.handleChange(e, "lastName")}
-              />
+              <label>
+                Last Name
+                <input
+                  type="text" 
+                  value={this.state.lastName} 
+                  name="lastName" id="lastName"
+                  className={shouldMarkError("lastName") ? "error" : ""}
+                  onChange={(e) => this.handleChange(e, "lastName")} />
+              </label>
               <span className="required-field" style={this.requiredStyle('lastName')}>{this.errorMessages('lastName')}</span>
             </div>
 
             <div>
-              <label>Username</label>
-              <input type="text" value={this.state.username} name="username" 
-                className={shouldMarkError("username") ? "error" : ""}
-                onChange={(e) => this.handleChange(e, "username")}
-              />
+              <label>
+                Username
+                <input
+                  type="text"
+                  value={this.state.username}
+                  name="username"
+                  className={shouldMarkError("username") ? "error" : ""}
+                  onChange={(e) => this.handleChange(e, "username")} />
+              </label>
               <span className="required-field" style={this.requiredStyle('username')}>{this.errorMessages('username')}</span>
             </div>
 
             <div>
-              <label>Password</label>
-              <input type="password" value={this.state.password} name="password"
-                className={shouldMarkError("password") ? "error" : ""}
-                onChange={(e) => this.handleChange(e, "password")}
-              />
+              <label>
+                Password
+                <input
+                  type="password"
+                  value={this.state.password}
+                  name="password"
+                  className={shouldMarkError("password") ? "error" : ""}
+                  onChange={(e) => this.handleChange(e, "password")} />
+              </label>
               <span className="note" style={helpMessage('password')}>At least 8 characters</span>
               <span className="required-field" style={this.requiredStyle('password')}>{this.errorMessages('password')}</span>
             </div>
 
             <div>
-            <label>Email</label>
-              <input type="text" name="email" value={this.state.email}
-                className={shouldMarkError("email") ? "error" : ""}
-                onChange={(e) => this.handleChange(e, "email")}
-              />
+              <label>
+                Email
+                <input
+                  type="text"
+                  name="email"
+                  value={this.state.email}
+                  className={shouldMarkError("email") ? "error" : ""}
+                  onChange={(e) => this.handleChange(e, "email")} />
+              </label>
               <span className="note" style={helpMessage('email')}>An activatoin link will be sent to this email</span>
               <span className="required-field" style={this.requiredStyle('email')}>{this.errorMessages('email')}</span>
             </div>
